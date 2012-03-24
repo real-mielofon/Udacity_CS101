@@ -15,6 +15,7 @@ def cached_execution(cache,code):
   else:
       cache[code] = eval(code)
       return cache[code]
+#      return eval(code)
   
 
 
