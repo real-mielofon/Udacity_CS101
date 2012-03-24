@@ -5,21 +5,28 @@
 
 #Here are the original procedures:
 
-def hashtable_update(htable, key, value):
-    bucket = hashtable_get_bucket(htable, key)
-    entry = find_key(bucket)
+def find_key(bucket, key):
     for entry in bucket:
         if entry[0] == key:
-            entry[1] = value
-            return
-    bucket.append([key, value])
+            return entry
+    return None
+    
+
+def hashtable_update(htable, key, value):
+    bucket = hashtable_get_bucket(htable, key)
+    entry = find_key(bucket, key)
+    if entry != None:
+        entry[1] = value
+    else:
+        bucket.append([key, value])
 
 def hashtable_lookup(htable, key):
     bucket = hashtable_get_bucket(htable, key)
-    for entry in bucket:
-        if entry[0] == key:
-            return entry[1]
-    return None
+    entry = find_key(bucket, key)
+    if entry != None:
+        return entry[1]
+    else:
+        return None
 
 
 def make_hashtable(size):
