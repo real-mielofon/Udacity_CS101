@@ -26,20 +26,21 @@
 #                                long to run on inputs above 30.)
 
 def rabbits(n):
+    if n <= 2:
+        return 1
+    else:
+        if (n >=3) and (n <= 5):
+            return rabbits(n - 1) + rabbits(n - 2) 
+        else:
+            return rabbits(n - 1) + rabbits(n - 2) - rabbits(n - 5)
 
-
-
-
-
-
-
-#print rabbits(10)
+print rabbits(10)
 #>>> 35
 
-#s = ""
-#for i in range(1,12):
-#    s = s + str(rabbits(i)) + " "
-#print s
+s = ""
+for i in range(1,12):
+    s = s + str(rabbits(i)) + " "
+print s
 #>>> 1 1 2 3 5 7 11 16 24 35 52 
 
     
