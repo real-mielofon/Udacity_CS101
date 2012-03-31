@@ -10,7 +10,17 @@
 #appear in the index, lucky_search should return None.
 
 def lucky_search(index, ranks, keyword):
-    
+    if keyword in index:
+        maxrank = 0
+        result = ''
+        for url in index[keyword]:
+            if (url in ranks) and (ranks[url] > maxrank):
+                result = url
+                maxrank = ranks[url] 
+        return result
+            
+    else:
+        return None
             
 
 cache = {
