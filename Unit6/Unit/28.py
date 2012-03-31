@@ -15,15 +15,9 @@ def compute_ranks(graph):
             newrank = (1 - d) / npages
             
             #Insert Code Here
-<<<<<<< HEAD
-            print page, graph[page]
-            
-            numoutlinks = 0
             for link in graph:
                 if page in graph[link]: 
                     newrank = newrank + d * (ranks[link] / len(graph[link]))
-=======
->>>>>>> dd400c0022da7d2d5fa97e233bb6b5ad8f4e356d
             
             newranks[page] = newrank
         ranks = newranks
@@ -220,11 +214,6 @@ def lookup(index, keyword):
         return None
 
 index, graph = crawl_web('http://udacity.com/cs101x/urank/index.html')
-<<<<<<< HEAD
-print graph
-
-=======
->>>>>>> dd400c0022da7d2d5fa97e233bb6b5ad8f4e356d
 ranks = compute_ranks(graph)
 print ranks
 
