@@ -31,9 +31,28 @@
 #returned list should be a list of the numbers at the corresponding row in the
 #triangle.
 
+def get_value(line, i):
+    if i < 0 or i >= len(line):
+        return 0
+    else:
+        return line[i]
+
 def triangle(n):
-
-
+    if n == 0:
+        return []
+    if n == 1:
+        return [[1]]
+    else:
+        result = triangle(n-1)
+        if n-2 < len(result):
+            prevline = result[n-2]
+#        else:
+#           prevline = []
+        newline = []
+        for i in range(n):
+            newline.append(get_value(prevline, i-1)+get_value(prevline, i))
+        result.append(newline)
+        return result    
 
 
 #For example:
