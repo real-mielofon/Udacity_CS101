@@ -24,11 +24,13 @@ ada_family = { 'Judith Blunt-Lytton': ['Anne Isabella Blunt', 'Wilfrid Scawen Bl
 #does not matter and duplicates will be ignored.
  
 def ancestors(genealogy, person):
-
-
-
-
-
+    if person in genealogy:
+        result = genealogy[person]
+        for node in result:
+            result = result + ancestors(genealogy, node)
+        return result
+    else:
+        return [] 
 
 #Here are some examples:
 
