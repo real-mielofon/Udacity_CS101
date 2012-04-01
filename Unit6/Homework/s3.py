@@ -33,7 +33,49 @@
 #nearly sorted, the actual work will be much worse than expected).
 
 
+def qsort(list, compare):
+    if len(list) <= 1:
+        return list
+    list_left = []
+    list_right = []
+    node_pivot = list[0]
+    for node in list[1:]:
+        if compare(node, node_pivot) > 0:
+            list_right.append(node)
+        else:
+            list_left.append(node)
+    #sort parts
+    list_left = qsort(list_left, compare)+[node_pivot]
+    list_right = qsort(list_right, compare)
+    
+    #merge
+    result = []
+    i,j = 0,0
+    for k in range(len(list)):
+        if (i >= len(list_left)) or (((j < len(list_right))) and compare(list_left[i], list_right[j]) > 0):
+            result.append(list_right[j])
+            j = j + 1
+        else:   
+            result.append(list_left[i])
+            i = i + 1
+    return result
+
+def compare_rank(node1, node2):
+    return node1[1] < node2[1]
+
 def ordered_search(index, ranks, keyword):
+    if keyword in index:
+        url_ranks = []
+        for url in index[keyword]:
+            url_ranks.append([url, ranks[url]])
+        url_ranks = qsort(url_ranks, compare_rank)
+        #extract urls
+        result = []
+        for node in url_ranks:
+            result.append(node[0])
+        return result            
+    else:
+        return None
 
 
 
