@@ -46,8 +46,6 @@ def triangle(n):
         result = triangle(n-1)
         if n-2 < len(result):
             prevline = result[n-2]
-#        else:
-#           prevline = []
         newline = []
         for i in range(n):
             newline.append(get_value(prevline, i-1)+get_value(prevline, i))
