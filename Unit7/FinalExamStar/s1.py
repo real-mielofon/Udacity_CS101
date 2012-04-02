@@ -18,9 +18,12 @@ def reachable(graph, node):
                 if not e in result:
                     result.append(e)
                     reachable_result(graph, e, result)  
-    result = [node]
-    reachable_result(graph, node, result)
-    return result
+    if node in graph:
+        result = [node]
+        reachable_result(graph, node, result)
+        return result
+    else:
+        return []
 
 #For example,
 
