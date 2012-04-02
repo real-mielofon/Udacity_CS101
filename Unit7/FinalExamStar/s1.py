@@ -12,10 +12,15 @@
 
 
 def reachable(graph, node):
-
-
-
-
+    def reachable_result(graph, node, result):
+        if node in graph:
+            for e in graph[node]:
+                if not e in result:
+                    result.append(e)
+                    reachable_result(graph, e, result)  
+    result = [node]
+    reachable_result(graph, node, result)
+    return result
 
 #For example,
 
