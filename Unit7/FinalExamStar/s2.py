@@ -29,12 +29,13 @@
 #>>> 1
 
 def edit_distance(s,t):
+    # algorithm Levenshtein distance
     m, n = len(s)+1, len(t)+1
     d = []
     for i in range(m):
         d.append([i])
         for j in range(1, n):
-            d[i].append('e')       
+            d[i].append(0)       
     for j in range(n):
         d[0][j] = j       
     
@@ -43,29 +44,12 @@ def edit_distance(s,t):
             if s[i-1] == t[j-1]:
                 d[i][j] = d[i-1][j-1] # no operation required
             else:
-                d[i][j] = minimum(
+                d[i][j] = min(
                                   d[i-1][j] + 1,  # a deletion
                                   d[i][j-1] + 1,  # an insertion
                                   d[i-1][j-1] + 1 # a substitution
                                   )
-    print_matrix(d)                
-
     return d[m-1][n-1] 
-
-def minimum_2(a,b):
-    if a <= b:
-        return a
-    else:
-        return b
-
-def minimum(a,b,c):
-    m_bc = minimum_2(b, c)
-    if a <= m_bc:
-        return a
-    else:
-        return m_bc
-    
-                       
     
 def print_matrix(d):
     for i in range(len(d)):
