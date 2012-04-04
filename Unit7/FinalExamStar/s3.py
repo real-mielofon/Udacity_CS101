@@ -34,7 +34,21 @@
 
 
 def multi_lookup(index, query):
-    
+    result = []
+    for word in query:
+        result.append(lookup(index, word))
+    result_filter = result[0]
+    for word in result[1:]:
+        for url in result_filter:
+            if (result_filter[url] != -1) and (url in word) and (result_filter[url]+1 == word[url]):
+                result_filter[url] = word[url]
+            else:
+                result_filter[url] = -1   
+    result = []
+    for url in result_filter:
+        if result_filter[url] != -1:
+            result.append(url) 
+    return result
 
 
 def crawl_web(seed): # returns index, graph of inlinks
@@ -82,14 +96,16 @@ def union(a, b):
 
 def add_page_to_index(index, url, content):
     words = content.split()
+    pos_word = 0
     for word in words:
-        add_to_index(index, word, url)
+        add_to_index(index, word, pos_word, url)
+        pos_word = pos_word + 1 
         
-def add_to_index(index, keyword, url):
+def add_to_index(index, keyword, pos_word, url):
     if keyword in index:
-        index[keyword].append(url)
+        index[keyword][url] = pos_word
     else:
-        index[keyword] = [url]
+        index[keyword] = {url:pos_word}
 
 def lookup(index, keyword):
     if keyword in index:
@@ -148,16 +164,16 @@ def get_page(url):
 index, graph = crawl_web('http://www.udacity.com/cs101x/final/multi.html')
 
 print multi_lookup(index, ['Python'])
-#>>> ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
+print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
 
 print multi_lookup(index, ['Monty', 'Python'])
-#>>> ['http://www.udacity.com/cs101x/final/a.html']
+print ['http://www.udacity.com/cs101x/final/a.html']
 
 print multi_lookup(index, ['Python', 'programming', 'language'])
-#>>> ['http://www.udacity.com/cs101x/final/b.html']
+print ['http://www.udacity.com/cs101x/final/b.html']
 
 print multi_lookup(index, ['Thomas', 'Jefferson'])
-#>>> ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
+print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
 
 print multi_lookup(index, ['most', 'powerful', 'weapon'])
-#>>> ['http://www.udacity.com/cs101x/final/a.html']
+print ['http://www.udacity.com/cs101x/final/a.html']
