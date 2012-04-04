@@ -29,23 +29,49 @@
 #>>> 1
 
 def edit_distance(s,t):
-
+    # algorithm Levenshtein distance
+    m, n = len(s)+1, len(t)+1
+    d = []
+    for i in range(m):
+        d.append([i])
+        for j in range(1, n):
+            d[i].append(0)       
+    for j in range(n):
+        d[0][j] = j       
+    
+    for i in range(1, m):
+        for j in range(1, n):
+            if s[i-1] == t[j-1]:
+                d[i][j] = d[i-1][j-1] # no operation required
+            else:
+                d[i][j] = min(
+                                  d[i-1][j] + 1,  # a deletion
+                                  d[i][j-1] + 1,  # an insertion
+                                  d[i-1][j-1] + 1 # a substitution
+                                  )
+    return d[m-1][n-1] 
+    
+def print_matrix(d):
+    for i in range(len(d)):
+        print d[i]
 
 
 #For example:
 
+print edit_distance('abc', 'abcde')
+
 # Delete the 'a'
-print edit_distance('audacity', 'udacity')
+print 'audacity', 'udacity', edit_distance('audacity', 'udacity')
 #>>> 1
 
 # Delete the 'a', replace the 'u' with 'U'
-print edit_distance('audacity', 'Udacity')
+print 'audacity', 'Udacity', edit_distance('audacity', 'Udacity')
 #>>> 2
 
 # Five replacements
-print edit_distance('peter', 'sarah')
+print 'peter', 'sarah', edit_distance('peter', 'sarah')
 #>>> 5
 
 # One deletion
-print edit_distance('pete', 'peter')
+print 'pete', 'peter', edit_distance('pete', 'peter')
 #>>> 1
