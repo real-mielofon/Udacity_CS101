@@ -19,27 +19,26 @@ def is_list(p):
 #input is a List, and returns False otherwise.
 
 def deep_count(p):
-    result = len(p)
-    for node in p:
-        if is_list(node):
-            result = result + deep_count(node)
-    return result
+    count = 0
+    if is_list(p):
+        for item in p:
+            if is_list(item):
+                    count = count+deep_count(item)    
+            count = count + 1            
+        return count
+    else:
+        return 0
 
 
 
+print deep_count(1), ' = 0'
 
-print deep_count([1]), ' = 1'
-
-print deep_count([1, 2, 3])
-#>>> 3
+print deep_count([1, 2, 3]), ' = 3'
 
 # the empty list still counts as an element of the outer list
-print deep_count([1, [], 3]) 
-#>>> 3 
+print deep_count([1, [], 3]), ' = 3' 
 
-print deep_count([1, [1, 2, [3, 4]]])
-#>>> 7
+print deep_count([1, [1, 2, [3, 4]]]), ' = 7'
 
-print deep_count([[[[[[[[1, 2, 3]]]]]]]])
-#>>> 10
+print deep_count([[[[[[[[1, 2, 3]]]]]]]]), ' = 10'
  
