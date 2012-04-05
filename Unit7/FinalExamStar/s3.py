@@ -169,19 +169,19 @@ def get_page(url):
 
 #Here are a few examples from the test site:
 
-index, graph = crawl_web('http://www.udacity.com/cs101x/final/multi.html')
-
-print multi_lookup(index, ['Python'])
-print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
-
-print multi_lookup(index, ['Monty', 'Python'])
-print ['http://www.udacity.com/cs101x/final/a.html']
-
-print multi_lookup(index, ['Python', 'programming', 'language'])
-print ['http://www.udacity.com/cs101x/final/b.html']
-
-print multi_lookup(index, ['Thomas', 'Jefferson'])
-print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
-
-print multi_lookup(index, ['most', 'powerful', 'weapon'])
-print ['http://www.udacity.com/cs101x/final/a.html']
+#index, graph = crawl_web('http://www.udacity.com/cs101x/final/multi.html')
+#
+#print multi_lookup(index, ['Python'])
+#print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
+#
+#print multi_lookup(index, ['Monty', 'Python'])
+#print ['http://www.udacity.com/cs101x/final/a.html']
+#
+#print multi_lookup(index, ['Python', 'programming', 'language'])
+#print ['http://www.udacity.com/cs101x/final/b.html']
+#
+#print multi_lookup(index, ['Thomas', 'Jefferson'])
+#print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
+#
+#print multi_lookup(index, ['most', 'powerful', 'weapon'])
+#print ['http://www.udacity.com/cs101x/final/a.html']
