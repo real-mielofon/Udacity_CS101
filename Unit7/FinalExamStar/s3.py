@@ -34,23 +34,25 @@
 
 
 def multi_lookup(index, query):
-    result = []
+    result_filter = {}
+    flag_firstword = True
     for word in query:
-        result.append(lookup(index, word))
-
-    # first word
-    result_filter = result[0]
-    # filter by next word
-    for word in result[1:]:
-        result_filter_2 = {}        
-        for url in result_filter:
-            # if it next word
-            if (result_filter[url] != -1) and (url in word) and (result_filter[url]+1 == word[url]):
-                result_filter_2[url] = word[url]
-        result_filter = result_filter_2         
+        result_for_word = lookup(index, word)
+        if flag_firstword:
+            # first word
+            result_filter = result_for_word
+            flag_firstword = False
+        else:
+            # next word
+            result_filter_next = {}        
+            for url in result_filter:
+                # if it next word
+                if (url in result_for_word) and (result_filter[url]+1 == result_for_word[url]):
+                    result_filter_next[url] = result_for_word[url]
+            result_filter = result_filter_next         
 
     # generate result without indexword dictonary -> list keys
-    return result_filter.keys()
+    return result_filter.keys() # change code which below
 #    result = []
 #    for url in result_filter:
 #        result.append(url) 
