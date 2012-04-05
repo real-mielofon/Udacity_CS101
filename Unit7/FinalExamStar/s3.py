@@ -37,18 +37,24 @@ def multi_lookup(index, query):
     result = []
     for word in query:
         result.append(lookup(index, word))
+
+    # first word
     result_filter = result[0]
+    # filter by next word
     for word in result[1:]:
+        result_filter_2 = {}        
         for url in result_filter:
+            # if it next word
             if (result_filter[url] != -1) and (url in word) and (result_filter[url]+1 == word[url]):
-                result_filter[url] = word[url]
-            else:
-                result_filter[url] = -1   
-    result = []
-    for url in result_filter:
-        if result_filter[url] != -1:
-            result.append(url) 
-    return result
+                result_filter_2[url] = word[url]
+        result_filter = result_filter_2         
+
+    # generate result without indexword dictonary -> list keys
+    return result_filter.keys()
+#    result = []
+#    for url in result_filter:
+#        result.append(url) 
+#    return result
 
 
 def crawl_web(seed): # returns index, graph of inlinks
