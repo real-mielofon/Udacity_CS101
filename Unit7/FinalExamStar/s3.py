@@ -177,3 +177,6 @@ print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs1
 
 print multi_lookup(index, ['most', 'powerful', 'weapon'])
 print ['http://www.udacity.com/cs101x/final/a.html']
+
+print multi_lookup(index, ['most', 'powerful', 'weapon', 'most', 'powerful', 'weapon'])
+print ['http://www.udacity.com/cs101x/final/a.html']
