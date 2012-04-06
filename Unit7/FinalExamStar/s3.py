@@ -126,28 +126,33 @@ def multi_lookup(index, query):
     result_filter = {}
     flag_firstword = True
     for word in query:
-        result_for_word = lookup(index, word)
-        if result_for_word == None:
-            return [] # not found word
-        if flag_firstword:
-            # first word
-            result_filter = result_for_word
-            flag_firstword = False
-        else:
-            # next word
-            result_filter_next = {}        
-            for url in result_filter:
-                # if it next word
-                if (url in result_for_word) and (result_filter[url]+1 == result_for_word[url]):
-                    result_filter_next[url] = result_for_word[url]
-            result_filter = result_filter_next         
+        if word not in ['', ' ']:
+            result_for_word = lookup(index, word)
+            if result_for_word == None:
+                return [] # not found word
+            if flag_firstword:
+                # first word
+                result_filter = result_for_word
+                flag_firstword = False
+            else:
+                # next word
+                result_filter_next = {}        
+                for url in result_filter:
+                    # if it next word
+                    for pos1 in  result_filter[url]:
+                        if url in result_for_word and pos1+1 in result_for_word[url]:
+                            if url in result_filter_next:
+                                result_filter_next[url].append(pos1+1)
+                            else:
+                                result_filter_next[url] = [pos1+1]
+                result_filter = result_filter_next         
 
     # generate result without indexword dictonary -> list keys
-    return result_filter.keys() # change code which below
-#    result = []
-#    for url in result_filter:
-#        result.append(url) 
-#    return result
+#    return result_filter.keys() # change code which below
+    result = []
+    for url in result_filter:
+        result.append(url) 
+    return result
 
 
 def crawl_web(seed): # returns index, graph of inlinks
@@ -202,9 +207,12 @@ def add_page_to_index(index, url, content):
         
 def add_to_index(index, keyword, pos_word, url):
     if keyword in index:
-        index[keyword][url] = pos_word
+        if url in index[keyword]:
+            index[keyword][url].append(pos_word)
+        else:
+            index[keyword][url] = [pos_word]
     else:
-        index[keyword] = {url:pos_word}
+        index[keyword] = {url:[pos_word]}
 
 def lookup(index, keyword):
     if keyword in index:
