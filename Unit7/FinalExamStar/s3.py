@@ -34,21 +34,29 @@
 
 
 def multi_lookup(index, query):
-    result = []
+    result_filter = {}
+    flag_firstword = True
     for word in query:
-        result.append(lookup(index, word))
-    result_filter = result[0]
-    for word in result[1:]:
-        for url in result_filter:
-            if (result_filter[url] != -1) and (url in word) and (result_filter[url]+1 == word[url]):
-                result_filter[url] = word[url]
-            else:
-                result_filter[url] = -1   
-    result = []
-    for url in result_filter:
-        if result_filter[url] != -1:
-            result.append(url) 
-    return result
+        result_for_word = lookup(index, word)
+        if flag_firstword:
+            # first word
+            result_filter = result_for_word
+            flag_firstword = False
+        else:
+            # next word
+            result_filter_next = {}        
+            for url in result_filter:
+                # if it next word
+                if (url in result_for_word) and (result_filter[url]+1 == result_for_word[url]):
+                    result_filter_next[url] = result_for_word[url]
+            result_filter = result_filter_next         
+
+    # generate result without indexword dictonary -> list keys
+    return result_filter.keys() # change code which below
+#    result = []
+#    for url in result_filter:
+#        result.append(url) 
+#    return result
 
 
 def crawl_web(seed): # returns index, graph of inlinks
@@ -131,7 +139,7 @@ cache = {
 Monty likes the Python programming language
 Thomas Jefferson founded the University of Virginia
 When Mandela was in London, he visited Nelson's Column.
-
+step by step
 </body>
 </html>
 """, 
@@ -142,6 +150,8 @@ Monty Python is not about a programming language
 Udacity was not founded by Thomas Jefferson
 Nelson Mandela said "Education is the most powerful weapon which you can
 use to change the world."
+
+step by step
 </body>
 </html>
 """, 
@@ -178,5 +188,5 @@ print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs1
 print multi_lookup(index, ['most', 'powerful', 'weapon'])
 print ['http://www.udacity.com/cs101x/final/a.html']
 
-print multi_lookup(index, ['most', 'powerful', 'weapon', 'most', 'powerful', 'weapon'])
-print ['http://www.udacity.com/cs101x/final/a.html']
+print multi_lookup(index, 'step by step'.split())
+print ['http://www.udacity.com/cs101x/final/a.html', 'http://www.udacity.com/cs101x/final/b.html']
