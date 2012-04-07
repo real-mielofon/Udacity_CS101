@@ -1,3 +1,92 @@
+################################################################################
+# doctest testcases
+"""
+# Basic Udacity tests
+>>> sorted(multi_lookup(index, ['Python']))
+['http://www.udacity.com/cs101x/final/a.html', 'http://www.udacity.com/cs101x/final/b.html']
+
+>>> sorted(multi_lookup(index, ['Monty', 'Python']))
+['http://www.udacity.com/cs101x/final/a.html']
+
+>>> sorted(multi_lookup(index, ['Python', 'programming', 'language']))
+['http://www.udacity.com/cs101x/final/b.html']
+
+>>> sorted(multi_lookup(index, ['Thomas', 'Jefferson']))
+['http://www.udacity.com/cs101x/final/a.html', 'http://www.udacity.com/cs101x/final/b.html']
+
+>>> sorted(multi_lookup(index, ['most', 'powerful', 'weapon']))
+['http://www.udacity.com/cs101x/final/a.html']
+
+# Empty results
+>>> sorted(multi_lookup(index, []))
+[]
+>>> sorted(multi_lookup(index, ['']))
+[]
+>>> sorted(multi_lookup(index, [' ']))
+[]
+>>> sorted(multi_lookup(index, ['not_exist']))
+[]
+>>> sorted(multi_lookup(index, ['python']))
+[]
+>>> sorted(multi_lookup(index, ['Python', 'not_exist']))
+[]
+>>> sorted(multi_lookup(index, ['not_exist', 'Python']))
+[]
+>>> sorted(multi_lookup(index, ['Python', 'Python']))
+[]
+>>> sorted(multi_lookup(index, ['University', 'Virginia']))
+[]
+
+A sentence that appears forward should not appear backwards.
+(Thanks to @slothmaster)
+>>> sorted(multi_lookup(index, ['Python','Monty']))
+[]
+
+Two pages contain programming language,
+>>> sorted(multi_lookup(index, ['programming', 'language']))
+['http://www.udacity.com/cs101x/final/a.html', 'http://www.udacity.com/cs101x/final/b.html']
+
+but only one followed by Udacity,
+>>> sorted(multi_lookup(index, ['programming', 'language', 'Udacity']))
+['http://www.udacity.com/cs101x/final/a.html']
+
+and only one preceded by Python.
+>>> sorted(multi_lookup(index, ['Python', 'programming', 'language']))
+['http://www.udacity.com/cs101x/final/b.html']
+
+Two pages have all the keywords but only one in this order.
+>>> sorted(multi_lookup(index, ['Thomas', 'Jefferson', 'founded']))
+['http://www.udacity.com/cs101x/final/b.html']
+
+A page has two sentences that start with the first word,
+>>> sorted(multi_lookup(index, ['is']))
+['http://www.udacity.com/cs101x/final/a.html']
+
+but only one sentence is followed by 'not about'.
+>>> sorted(multi_lookup(index, ['is', 'not', 'about']))
+['http://www.udacity.com/cs101x/final/a.html']
+
+All pages start with <html> <body> words.
+>>> sorted(multi_lookup(index, ['<html>', '<body>']))
+['http://www.udacity.com/cs101x/final/a.html', 'http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/multi.html']
+
+A long sentence.
+>>> sorted(multi_lookup(index, ['Thomas', 'Jefferson', 'founded', 'the', 'University', 'of', 'Virginia']))
+['http://www.udacity.com/cs101x/final/b.html']
+
+Test cases below are weird and not expected to be tried by Udacity.
+------------------------------------------------------------------
+Word combined with empty string and blank string
+Should be empty string considered as a searchable word?
+>>> sorted(multi_lookup(index, ['', 'Virginia']))
+['http://www.udacity.com/cs101x/final/b.html']
+
+Should be blank string considered as a searchable word?
+>>> sorted(multi_lookup(index, [' ', 'Virginia']))
+['http://www.udacity.com/cs101x/final/b.html']
+"""
+################################################################################
+
 #Multi-word Queries
 
 #Triple Gold Star
@@ -59,11 +148,11 @@ def multi_lookup(index, query):
                 result_filter = result_filter_next         
 
     # generate result without indexword dictonary -> list keys
-#    return result_filter.keys() # change code which below
-    result = []
-    for url in result_filter:
-        result.append(url) 
-    return result
+    return result_filter.keys() # change code which below
+#    result = []
+#    for url in result_filter:
+#        result.append(url) 
+#    return result
 
 
 def crawl_web(seed): # returns index, graph of inlinks
@@ -149,7 +238,6 @@ cache = {
 Monty likes the Python programming language
 Thomas Jefferson founded the University of Virginia
 When Mandela was in London, he visited Nelson's Column.
-
 </body>
 </html>
 """, 
@@ -179,19 +267,39 @@ def get_page(url):
 
 #Here are a few examples from the test site:
 
+#index, graph = crawl_web('http://www.udacity.com/cs101x/final/multi.html')
+
+#print multi_lookup(index, ['Python'])
+#print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
+#
+#print multi_lookup(index, ['Monty', 'Python'])
+#print ['http://www.udacity.com/cs101x/final/a.html']
+#
+#print multi_lookup(index, ['Python', 'programming', 'language'])
+#print ['http://www.udacity.com/cs101x/final/b.html']
+#
+#print multi_lookup(index, ['Thomas', 'Jefferson'])
+#print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
+#
+#print multi_lookup(index, ['most', 'powerful', 'weapon'])
+#print ['http://www.udacity.com/cs101x/final/a.html']
+#
+#print multi_lookup(index, 'step by step'.split())
+#print ['http://www.udacity.com/cs101x/final/a.html', 'http://www.udacity.com/cs101x/final/b.html']
+
+
+################################################################################
+# Crawl the cached web.
 index, graph = crawl_web('http://www.udacity.com/cs101x/final/multi.html')
 
-print multi_lookup(index, ['Python'])
-print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
+print sorted(multi_lookup(index, ['', 'Virginia']))
 
-print multi_lookup(index, ['Monty', 'Python'])
-print ['http://www.udacity.com/cs101x/final/a.html']
-
-print multi_lookup(index, ['Python', 'programming', 'language'])
-print ['http://www.udacity.com/cs101x/final/b.html']
-
-print multi_lookup(index, ['Thomas', 'Jefferson'])
-print ['http://www.udacity.com/cs101x/final/b.html', 'http://www.udacity.com/cs101x/final/a.html']
-
-print multi_lookup(index, ['most', 'powerful', 'weapon'])
-print ['http://www.udacity.com/cs101x/final/a.html']
+if __name__ == "__main__":
+    # Standard
+    import doctest
+    doctest.testmod(report=True, verbose=True, exclude_empty=True)
+elif __name__ == "main":
+    # Udacity
+    import doctest, main
+    doctest.testmod(main,report=True, verbose=True, exclude_empty=True)
+################################################################################
