@@ -18,13 +18,18 @@
 
 #For credit, your procedure must not use: while, for, or import math. 
 
+# It is my mistake :-(
+#def hexes_to_udaciousness(n, spread, target):
+#    result = n
+#    i = 0
+#    while result < target:
+#        result = result + result* spread
+#        i = i + 1
+#    return i
 def hexes_to_udaciousness(n, spread, target):
-    result = n
-    i = 0
-    while result < target:
-        result = result + result* spread
-        i = i + 1
-    return i
+    if n >= target:
+        return 0
+    return 1+hexes_to_udaciousness(n+(n*spread), spread, target)
 
 
 #0 more needed, since n already exceeds target
@@ -42,5 +47,7 @@ print hexes_to_udaciousness(20000, 2, 7 * 10 ** 9), ' = 12'
 #more friends means faster world domination!
 print hexes_to_udaciousness(15000, 3, 7 * 10 ** 9), ' = 10' 
 
+
+print hexes_to_udaciousness(100, 2, 1000), ' = 10' 
 
 
