@@ -38,10 +38,7 @@ def triangle(n):
         return [[1]]
     
     mylist = triangle(n-1)
-    mylist.append([1])
-    for i in range(1,n-1):
-        mylist[-1].append(mylist[-2][i-1]+mylist[-2][i])
-    mylist[-1].append(1)
+    mylist.append([1]+ [mylist[-1][i-1]+mylist[-1][i] for i in range(1,n-1)]+[1])    
     return mylist    
 
 

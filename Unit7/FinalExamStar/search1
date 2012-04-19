@@ -1,0 +1,3 @@
+def search(n, mylist):
+	for num in mylist:
+	
