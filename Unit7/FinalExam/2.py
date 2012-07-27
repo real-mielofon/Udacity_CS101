@@ -7,7 +7,7 @@
 def unique(a, b, c):
     return a!=b and a!=c and b!=c
 
-#For example,
+#For example, 1,2,3
 
 print unique(1, 2, 3)
 #>>> True
